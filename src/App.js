@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from 'react'
+import {BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import HomePage from './pages/HomePage/HomePage';
+import FavoritesPage from './pages/FavoritePage/FavoritesPage';
+import Navbar from './Navbar/Navbar';
+import HistoryPage from './pages/HistoryPage/HistoryPage';
+function App () {
+  const [searchTerm, setSearchTerm] = React.useState('');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Router>
+        <Navbar 
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+        />
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/home" element={<HomePage searchTerm={searchTerm}/>} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          {/* Các route khác có thể thêm vào đây */}
+        </Routes>
+      </Router>
     </div>
-  );
+  )
 }
-
 export default App;

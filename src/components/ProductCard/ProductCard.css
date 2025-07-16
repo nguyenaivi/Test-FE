@@ -1,0 +1,50 @@
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px;
+  width: 250px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.favorite-btn.active {
+  color: #e74c3c;
+}
+.favorite-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Đặt các nút trên cùng một hàng, đẩy nút trái tim sang phải */
+.button-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Nút trái tim nằm sát phải */
+.button-card button:last-child {
+  margin-left: auto;
+}
+
+/* Tùy chọn: làm đẹp nút trái tim */
+.button-card button:last-child {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.button-card button:last-child:hover {
+  transform: scale(1.2);
+}
