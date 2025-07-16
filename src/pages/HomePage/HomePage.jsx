@@ -9,6 +9,7 @@ function HomePage({ searchTerm }) {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '' });
   const [favoriteProducts, setFavoriteProducts] = useState(() => {
     //Lấy từ localStorage nếu có
     const stored = localStorage.getItem('favoriteProducts');
@@ -16,17 +17,24 @@ function HomePage({ searchTerm }) {
   });
 
   const handleToggleFavorite = (product) => {
-    setFavoriteProducts(prev => {
-      let updated;
-      if (prev.some(p => p.id === product.id)) {
-        updated = prev.filter(p => p.id !== product.id);
-      } else {
-        updated = [...prev, product];
-      }
-      localStorage.setItem('favoriteProducts', JSON.stringify(updated));
-      return updated;
-    })
-  }
+  setFavoriteProducts(prev => {
+    let updated;
+    let message;
+    if (prev.some(p => p.id === product.id)) {
+      updated = prev.filter(p => p.id !== product.id);
+      message = 'Đã bỏ khỏi yêu thích!';
+    } else {
+      updated = [...prev, product];
+      message = 'Đã thêm vào yêu thích!';
+    }
+    localStorage.setItem('favoriteProducts', JSON.stringify(updated));
+    // Hiện popup
+    setToast({ show: true, message });
+    // Ẩn popup sau 1.5s
+    setTimeout(() => setToast({ show: false, message: '' }), 1500);
+    return updated;
+  });
+}
   useEffect(() => {
     // Giả lập gọi API
     setProducts(mockProducts);
@@ -98,6 +106,9 @@ function HomePage({ searchTerm }) {
 
   return (
     <div className="home-container">
+      {toast.show && (
+      <div className="toast-popup">{toast.message}</div>
+    )}
       <h1>Danh sách khoá học</h1>
 
       {/* Bộ lọc giá */}
